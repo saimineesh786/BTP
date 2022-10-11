@@ -1,0 +1,338 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+\graphicspath{ {./images/} }
+
+\title{Cross Product}
+\date{}
+\begin{document}
+\setlength{\parindent}{20pt}
+\begin{titlepage}
+\begin{center}
+\vspace{1cm}
+\normalsize
+\textbf{Project Report on}\\
+\vspace{0.5cm}
+
+\Large
+\textbf{Presentation of tensor products and exterior products}\\
+\vspace{0.5cm}
+\emph{Submitted by}\\        
+\vspace{0.5cm}
+\large
+\textbf{K. Sai Mineesh Reddy} \hspace{0.75cm}    
+\textbf{B190305CS}\\
+%\textbf{Group Members:}\\
+%\vfill
+\vspace{0.2cm}
+\emph{Under the Guidance of}\\ 
+\large
+\vspace{0.5cm}
+\textbf{Dr. K. Muralikrishnan} 
+
+\vspace{.5cm}
+\begin{center}
+ \includegraphics[width=0.4\textwidth]{nitc-logo.png}
+\end{center}
+\vspace{0.8cm}
+\textbf{Department of Computer Science and Engineering}\\
+\textbf{National Institute of Technology Calicut}\\
+\textbf{Calicut, Kerala, India - 673 601}\\
+\vspace{0.8cm}
+\textbf{October 11, 2022} %Enter the date
+\end{center}
+\end{titlepage}
+
+\maketitle
+
+\section{Computational Geometry}
+    \subsection{Line-segment Properties}
+    \subsubsection{\textbf{Convex combination of two points in $\mathbb{R}^{2}$}}
+    \hspace{2cm} Let there be two distinct points $p_{1}=(x_{1},y_{1}), p_{2}=(x_{2},y_{2})$. Let \emph{l} be the straight line passing through $p_{1}$ and $p_{2}$.
+    
+    \begin{figure}[h]
+    \caption{Points $p_{1}$, $p_{2}$, $p_{3}$ and line \emph{l}}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic1.jpg}
+    \end{figure}
+
+    Convex combination of the points $p_1$ and $p_2$, say $p_{3}=(x_{3},y_{3})$ is defined to be a point that lies on line \emph{l} and between $p_{1}$ and $p_{2}$.\\
+
+    Now, that the slopes are equal. So, $\ddfrac{y_{3}-y_{1}}{x_{3}-x_{1}}=\ddfrac{y_{2}-y_{1}}{x_{2}-x_{1}} \xrightarrow{} (1)$ \\ \\
+    $\implies y_{3}=y_{1}+(\ddfrac{x_{3}-x_{1}}{x_{2}-x_{1}})(y_{2}-y_{1})$ \\ \\
+    Take $\alpha = \ddfrac{x_{3}-x_{1}}{x_{2}-x_{1}}$ \\ \\
+    $\implies y_{3}=\alpha y_{2} + (1-\alpha) y_{1}$ \\ \\
+    Similarly, $x_{3}=\beta x_{2} + (1-\beta) x_{1}$, where $\beta=\ddfrac{y_{3}-y_{1}}{y_{2}-y_{1}}$ \\ \\
+    \textbf{Claim} : $\alpha = \beta$ \\
+    \textbf{Proof} : Rearranging equation (1), we get $\ddfrac{y_{3}-y_{1}}{y_{2}-y_{1}}=\ddfrac{x_{3}-x_{1}}{x_{2}-x_{1}}$ \\ \\
+    $\implies \alpha = \beta \hspace{5cm} \blacksquare$ \\ \\
+    Hence, $x_{3}=\alpha x_{2} + (1-\alpha) x_{1}$ and $y_{3}=\alpha y_{2} + (1-\alpha) y_{1}$ where, $x_{1} \leq x_{3} \leq x_{2}$ \\ \\
+    $\implies 0 \leq \alpha \leq 1$ \\ \\
+    Concisely,  Convex combination of 2 points $p_{1}$ and $p_{2}$ is $p_{3} = \alpha p_{2} + (1 - \alpha) p_{1}$ where, $ 0 \leq \alpha \leq 1 $ 
+
+    \subsubsection{\textbf{Convex combination of two points in $\mathbb{R}^{n}$}}
+    \hspace{2cm} This section we use a bit complicated apparatus vectors. Let there be two distinct points pointed by vectors $\Vec{r_{1}}=(x_{1},...,x_{n})$, $\Vec{r_{2}}=(y_{1},...,y_{n})$. Let $\Vec{r_{3}}$ be the vector whose tail coincides with the head of $\Vec{r_{1}}$ and head coincides with the head of $\alpha \Vec{r_{2}}$. 
+    Using triangular law of vector addition, $\Vec{r_{3}}$ = $\Vec{r_{2}} - \Vec{r_{1}}$
+    
+    \begin{figure}[h]
+    \caption{Schematic diagram of vectors $\Vec{r_{1}}, \Vec{r_{2}}, \Vec{r_{3}}$}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic2.jpg}
+    \end{figure}
+
+    Now, Consider the scaled version of vector $\Vec{r_{3}}$, say $\alpha \Vec{r_{3}}$. If $0 \leq \alpha \leq 1$ then, the length of $\alpha \Vec{r_{3}}$ never exceeds  the length of $\Vec{r_{3}}$. \\ \\
+    Let $\Vec{r^{'}_{2}}$ be the vector whose tail coincides with the tail of $\Vec{r_{1}}$ and head coincides with the head of $\alpha \Vec{r_{2}}$. \\ 
+    Using triangular law of vector addition , $\Vec{r^{'}_{2}} = \Vec{r_{1}} + \alpha \Vec{r_{3}}$ \\ \\
+    $\implies \Vec{r^{'}_{2}} = \alpha \Vec{r_{2}} + (1 - \alpha) \Vec{r_{1}}$ \\ \\
+    Hence, Convex combination of 2 points $p_{1}$ and $p_{2}$ in $\mathbb{R}^{n}$ can be represented by the vector $\Vec{r^{'}_{2}} = \alpha \Vec{r_{2}} + (1 - \alpha) \Vec{r_{1}}$ where $0 \leq \alpha \leq 1$
+
+    \subsubsection{Line segment and Directed line segment}
+    
+    \begin{figure}[h]
+    \caption{Directed line segment $\overrightarrow{p_1p_2}$ and line segment $\overline{p_1p_2}$}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic3.jpg}
+    \end{figure}
+    
+    Let there be two distinct points in $\mathbb{R}^{2}$, $p_{1}$ and $p_{2}$, then the line segment $\overline{p_{1} p_{2}}$ is defined to be the set of all possible convex combinations of points $p_{1}$ and $p_{2}$. Also, $p_{1}$ and $p_{2}$ are called end points of the line segment $\overline{p_{1} p_{2}}$. \\ \\    
+    Intuitively, Directed segment $\overrightarrow{p_{1} p_{2}}$ is also the set of all possible convex combinations of $p_{1}$ and $p_{2}$, furthermore an order / an orientation is defined on this set. \\ \\
+    
+    Formally, if we translate the axes from $(0,0)$ to $p_{1}$ then vector $\Vec{p_{2}}$ with respect to origin $p_{1}$ is the directed segment $\overrightarrow{p_{1} p_{2}}$
+
+    \subsubsection{Computational Geometry Problems}
+    1. Let there be two directed segments $\overrightarrow{p_{1} p_{2}}$ and $\overrightarrow{p_{1} p_{3}}$, is $\overrightarrow{p_{1} p_{2}}$ clockwise from $\overrightarrow{p_{1} p_{3}}$ with respect to the common endpoint $p_{1}$ ? \\ \\
+    2. Let there be two line segments $\overline{p_{1} p_{2}}$ and $\overline{p_{2} p_{3}}$ , is it a left / right turn at point $p_{2}$ ? \\ \\
+    3. Do 2 distinct line segments $\overline{p_{1} p_{2}}$ and $\overline{p_{3} p_{4}}$ intersect ? \\ \\ \\
+    In all these problems, we assume that cross product of 2 vectors say, $\Vec{p_{1}}=(x_{1},y_{1})$ and $\Vec{p_{2}}=(x_{2},y_{2})$ as the signed area of parallelogram determined by $\Vec{0}=(0,0), \Vec{p_{1}}=(x_{1},y_{1}), \Vec{p_{2}}=(x_{2},y_{2}), \Vec{p_{1}}+\Vec{p_{2}}=(x_{1}+x_{2},y_{1}+y_{2})$ \\ 
+
+    \begin{figure}[h]
+    \caption{Parallelogram formed by $\Vec{0}, \Vec{p_{1}}, \Vec{p_{2}}, \Vec{p_{1}}+\Vec{p_{2}}$}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic4.jpg}
+    \end{figure}
+
+    Assume that  $ \Vec{p_{1}} $ is counter clockwise from $ \Vec{p_{2}} $. \\ \\
+    $ \Vec{p_{1}} \times \Vec{p_{2}} = Area(ABCD)$ \\ \\
+    $ Area(ABCD) = Area(ADEG) + Area(DEC) - Area(AFB) - Area(FGEB) $ \\ \\
+    $ \implies Area(ABCD) = x_{2}y_{1} - x_{1}y_{2} $ \\ \\
+    Similarly, If $ \Vec{p_{1}} $ is clockwise from $ \Vec{p_{2}} $ then, $ Area(ABCD) = x_{1}y_{2} - x_{2}y_{1} $ \\
+    Hence, if $\Vec(p_{1}) \times \Vec{p_{2}} = x_{2}y_{1} - x_{1}y_{2} $ then, \\ \\
+    if $\Vec{p_{1}} \times \Vec{p_{2}} > 0 $ then $ \Vec{p_{1}}$ is counter clockwise from $\Vec{p_{2}}$ \\ \\
+    else if $\Vec{p_{1}} \times \Vec{p_{2}} < 0 $ then $ \Vec{p_{1}}$ is clockwise from $\Vec{p_{2}}$ \\ \\
+    else $\Vec{p_{1}}$ is co-linear with $\Vec{p_{2}}$ \\
+
+
+    \subsection{Relative orientation of 2 directed segments given in $\mathbb{R}^{2}$} 
+    Let there be two directed line segments $ \overrightarrow{p_{0}p_{1}}$ and $\overrightarrow{p_{0}p_{2}}$ can be found this way : 
+    \begin{figure}[h]
+    \caption{relative orientation of $\overrightarrow{p_{0}p_{1}}$ , $\overrightarrow{p_{0}p_{2}}$ }
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic5.jpg}
+    \end{figure} \\
+    1. Translate the axes from $(0,0)$ to the point $p_{0}$ then we get vectors $ \Vec{p_{1}}=(x_{1}-x_{0},y_{1}-y_{0})$ and $\Vec{p_{2}}=(x_{2}-x_{0},y_{2}-y_{0}) $ \\ \\
+    2. Apply the if-else rule mentioned above where $ \Vec{p_{1}} \times \Vec{p_{2}} = Area(ABCD) = (x_{2} - x_{0})(y_{1} - y_{0}) - (x_{1} - x_{0})(y_{2} - y_{0})$ to get the relative orientation
+
+    \subsection{Left / Right turn at the common end point of 2 consecutive line segments given in $\mathbb{R}^{2}$}
+    \begin{figure}[h] 
+    \caption{Left/Right turn at $p_0$ traversing from $p_{1}$ to $p_{0}$ to $p_{2}$}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic6.jpg}
+    \end{figure}
+    1. Compute the relative orientation of $\overrightarrow{p_{0}p_{1}}$ from $\overrightarrow{p_{0}p_{2}}$ using the method described in section 1.2 \\ \\
+    2. If the orientation is counter clockwise then, we take a left turn at $p_{0}$ when traversing from $p_{1}$ to $p_{0}$ to $p_{2}$ \\ \\
+    3. Else if orientation is clockwise then, we make a right turn at $p_{0}$ when traversing from $p_{1}$ to $p_{0}$ to $p_{2}$ \\ \\
+    4. Else we don't make any turn at $p_{0}$
+
+    \subsection{2 line segments intersect or not}
+
+    \begin{figure}[h]
+    \caption{All possible orientations of 2 distinct line segments in $\mathbb{R}^{2}$}
+    \centering
+    \includegraphics[width=1\textwidth]{images/pic7.jpg}
+    \end{figure}
+
+    1. If two line segments intersect there are only 3 possible intersections i.e., \\ \\
+    Case 1 - intersect in non-endpoints, \\ \\
+    Case 2 - intersect in end points and \\ \\
+    Case 3 - an end point of a segment intersect non-end point of other segment \\ \\ 
+    Case - 1 : \\ \\
+    1. Consider the directed segments $\Vec{p_{2}p_{1}}$ and $\Vec{p_{3}p_{4}}$ . Since they both intersect at non-end points we observe that end points $p_{3}$ lies on the left of $\Vec{p_{2}p_{1}}$ and $p_{4}$ lies on the right of $\Vec{p_{2}p_{1}}$. Similarly, Observe that $p_{1}$ lies on the left of $\Vec{p_{3}p_{4}}$ and $p_{2}$ lies on the right of $\Vec{p_{3}p_{4}}$. \\ \\
+    2. Formulating this idea mathematically, we get ( following the figure 7)\\ \\
+        1. $ d_{1} = (\Vec{p_{2}}-\Vec{p_{3}}) \times (\Vec{p_{4}}-\Vec{p_{3}}) < 0 $ and $ d_{2}=(\Vec{p_{1}}-\Vec{p_{3}}) \times (\Vec{p_{4}}-\Vec{p_{3}}) > 0 $ \\ \\
+        2. $ d_{3} = (\Vec{p_{4}}-\Vec{p_{2}}) \times (\Vec{p_{1}}-\Vec{p_{2}}) > 0 $ and $ d_{4}=(\Vec{p_{3}}-\Vec{p_{2}}) \times (\Vec{p_{1}}-\Vec{p_{2}}) < 0 $ \\ \\
+    3. Hence for case-1 In general, 2 segments intersect if and only if $d_{1} d_{2} < 0$ and $d_{3} d_{4} < 0$ \\ \\
+    Case - 2 \& 3 : \\ \\
+    1. In these cases, at least one of the segment's end points lie on the other segment. Hence, $d_{i}=0$ for at least 2 distinct i in $\{1,2,3,4\}$ \\ \\
+    2. Specifically, if for i, say $d_2 = 0$ then,  $(\Vec{p_{1}}-\Vec{p_{3}}) \times (\Vec{p_{4}}-\Vec{p_{3}}) = 0$ \\ \\
+    $\implies p_1 $ is co linear with $\overline{p_3p_4}$. Co linearity is not  sufficient for intersection. Here segments intersect at $p_1$ if and only if $p_1$ is convex combination of $p_{3}$ and $p_4$. \\ \\
+    3. Hence for case-2 \& case-3, check if any $d_i = (\Vec{p_i}-\Vec{p_j}) \times (\Vec{p_k}-\Vec{p_j}) = 0$ and the corresponding point $p_i$ is a convex combination of $p_j$ and $p_k$ \\ \\
+    Case - 3 : \\ \\
+    1. It can be easily seen that any other case does not lead to an intersection
+
+    \section{Cross Product in n dimensions}   
+
+    \subsection{In 3-D}
+    The cross product of 2 vectors say, $\Vec{p_1}=(x_1,y_1,z_1)$ and $\Vec{p_2}=(x_2,y_2,z_2)$ in 3-dimensions is known to be $$ \Vec{p_1} \times \Vec{p_2} = \mdet{i & j & k\\ x_1 & y_1 & z_1 \\ x_2 & y_2 & z_2} = (y_1z_2 - y_2z_1)i + (x_2z_1 - x_1z_2)j + (x_1y_2 - x_2y_1)k$$, \\
+    where i, j and k are unit vectors along x, y and z axes respectively \\ \\
+    \begin{figure}[h]
+    \caption{Cross product in 3D $\land (\Vec{p_1},\Vec{p_2})$}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic8.jpg}
+    \end{figure}
+    Evident that cross product of 2 co linear vectors is zero, since one vector can be seen as a scaled version of the other say $\Vec{p_2}= \alpha \Vec{p_1}$ \\ \\
+    $\implies \Vec{p_1} \times \Vec{p_2} = 0 $. Hence, enough to concentrate on 2 non co-linear vectors\\ \\
+    If $\Vec{p_1}$ and $\Vec{p_2}$ are not co-linear then, consider the parallelogram formed with vertices $\Vec{p_0}=(0,0,0), \Vec{p_1}=(x_1,y_1,z_1), \Vec{p_2}=(x_2,y_2,z_2) and \Vec{p_1} + \Vec{p_2} = (x_1 + x_2,y_1 + y_2,z_1 + z_2)  $ \\ \\
+    Area of this parallelogram = base $\times$ height = $ 	\lVert \Vec{p_2} \rVert \lVert \Vec{p_1} \rVert \sin{\theta} = \sqrt{x_2^2 + y_2^2 + z_2^2} \sqrt{x_1^2 + y_1^2 + z_1^2} \sin{\theta}$ \\ \\
+    Inner (Dot) Product, $\Vec{p_1} . \Vec{p_2} = x_1x_2 + y_1y_2 + z_1z_2 = \lVert \Vec{p_2} \rVert \lVert \Vec{p_1} \rVert \cos{\theta} = \sqrt{x_2^2 + y_2^2 + z_2^2} \sqrt{x_1^2 + y_1^2 + z_1^2} \cos{\theta}$ \\ \\
+    $\implies \cos{\theta} = \ddfrac{x_1x_2 + y_1y_2 + z_1z_2}{\sqrt{x_2^2 + y_2^2 + z_2^2} \sqrt{x_1^2 + y_1^2 + z_1^2}}$ \\ \\
+    $\implies \sin{\theta} = \sqrt{1 - \ddfrac{(x_1x_2 + y_1y_2 + z_1z_2)^2}{(x_2^2 + y_2^2 + z_2^2)(x_1^2 + y_1^2 + z_1^2)}}$ \\ \\
+    $\implies$ Area of this parallelogram = $\sqrt{ (y_1z_2 - y_2z_1)^2 + (x_2z_1 - x_1z_2)^2 + (x_1y_2 - x_2y_1)^2}$ \\ \\
+    $\implies$ Area of this parallelogram = $\lVert \Vec{p_1} \times \Vec{p_2} \rVert$ \\ \\
+    In the plane containing $\Vec{p_1}$ and $\Vec{p_2}$, depending on the orientation of the 2 vectors relative to one another , the sign of cross products alters although magnitude of area remains the same i.e., $\Vec{p_1} \times \Vec{p_2} = - \Vec{p_2} \times \Vec{p_1} $ \\ \\
+    Hence, the area in 3-D has direction along with magnitude in fact this direction is normal to both $\Vec{p_1}$ and $\Vec{p_2}$ i.e, $\Vec{p_{1}} . (\Vec{p_1} \times \Vec{p_2}) = x_1(y_1z_2 - y_2z_1) + y_1(x_2z_1 - x_1z_2) + z_1(x_1y_2 - x_2y_1) = 0.$ Similarly, $\Vec{p_{2}} . (\Vec{p_1} \times \Vec{p_2}) = 0$. \\ \\
+    $\implies (\alpha_1 \Vec{p_{1}} + \alpha_2 \Vec{p_{2}}) . (\Vec{p_1} \times \Vec{p_2}) = 0$ \\ \\
+    $\implies (\Vec{p_1} \times \Vec{p_2}) \perp $ plane spanned by $\Vec{p_1}$ and $\Vec{p_2}$ \\ \\
+   Let V be Volume of the solid determined by plane formed by $ \Vec{p_2}, \Vec{p_1} $ and a vector $\Vec{p_3} = (x_3,y_3,z_3)$ \\ \\
+   $V = \Vec{p_3} . (\Vec{p_1} \times \Vec{p_2}) = \mdet{x_3 & y_3 & z_3\\ x_1 & y_1 & z_1 \\ x_2 & y_2 & z_2}$ \\ \\
+   Some simple derivations from above loose definitions are, \\ \\
+    1. Area of parallelogram = $\lVert \Vec{p_1} \times \Vec{p_2} \rVert = \lVert \Vec{p_2} \rVert \lVert \Vec{p_1} \rVert \sin{\theta}$ \\ \\
+    2. $\Vec{p_1} \times \Vec{p_1} = 0$ \\ \\
+    3. Anti commutativity $\Vec{p_1} \times \Vec{p_2} = - \Vec{p_2} \times \Vec{p_1}$
+
+    \subsection{In 2-D}
+    In 3-D cross product is defined on two vectors to be a vector in 2-D with magnitude as area of parallelogram formed by the 2 vectors and direction perpendicular to the plane spanned by the two vectors. \\
+    \begin{figure}[h]
+    \caption{Cross product in 2D $\land (\Vec{p_1})$}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/pic9.jpg}
+    \end{figure} 
+    Similarly, In 2-D we see that cross product is defined on 1 vector to be a vector with magnitude as length of that vector and direction perpendicular to that vector. \\ \\
+    Consider cross product of a vector $\land \Vec{p_1}=\land (x_1,y_1) = \mdet{i & j \\ x_1 & y_1 } = y_1 i - x_1j $ where i, j are unit vectors along x, y axes respectively. \\ \\
+    Here, $\lVert \land \Vec{p_1} \rVert = \sqrt{y_1^2 + x_1^2}$. \\ \\
+    Any vector $\Vec{p_2} = \alpha \Vec{p_1} = ( \alpha x_1, \alpha y_1)$ where $\alpha \in \mathbb{R}$ \\ \\
+    $\Vec{p_2} . (\land \Vec{p_1}) = 0$ \\ \\
+    $\implies \land \Vec{p_1} \perp$ line spanned by $\Vec{p_1}$ \\ \\
+    Let A be the area of a plane determined by line formed by $\Vec{p_1}$ and $\Vec{p_2}$. \\ \\
+    $A = \Vec{p_2} . (\land \Vec{p_1}) = \mdet{x_2 & y_2 \\ x_1 & y_1 } = x_2y_1 i - x_1y_2j $ where i, j are unit vectors along x, y axes respectively. \\ \\
+    Some simple observations from above loose definitions are, \\ \\
+    1. length of vector $ \Vec{p_1} = \land \Vec{p_1} = \sqrt{x_1^2 + y_1^2} $ \\ \\
+    \subsection{ In 4-D }
+    Extending ideas , Cross Product in 4-D is defined on 3 vectors to be a vector in 4-D with magnitude equal to the volume of solid spanned by these vectors and direction perpendicular to this solid. \\ \\
+    cross product of 3 vectors in 4-D, \\
+    $\land ( \Vec{p_1}, \Vec{p_2}, \Vec{p_3}) = \land{ ((w_1,x_1,y_1,z_1), (w_2,x_2,y_2,z_2) , (w_3,x_3,y_3,z_3))} = \mdet{i & j & k & l \\ w_1 & x_1 & y_1 & z_1 \\ w_2 & x_2 & y_2 & z_2 \\ w_3 & x_3 & y_3 & z_3}$ \\ \\
+    where i, j, k and l are unit vectors along principal axes respectively .
+    \subsection{In n-D}
+    Observing behaviour of cross product in 2-D, 3-D and 4-D (in 1-D it is not meaningful), cross product in n-D is defined on $n-1$ vectors to be a vector in n-D with magnitude equal to volume of solid in n-D spanned by the n-1 vectors and direction perpendicular to this solid. \\ \\
+    Cross product of n-1 vectors in n-D, \\
+    $\land(\Vec{p_1},...,\Vec{p_{n-1}}) = \land((x_{11},...,x_{1n}),...,(x_{n-11},...,x_{n-1n})) = \mdet{e_{1} & e_{2}  & ... & e_{n}  \\ x_{11} & x_{12} & ... & x_{1n} \\ x_{21} & x_{22} & ... & x_{2n} \\ ... & ... & ... & ... \\ x_{n-11} & x_{n-12} & ... & x_{n-1n}} $ \\ \\
+    where $e_1, e_2 , ... , e_n$ are unit vectors along principal axes respectively \\ \\
+    All the formulations which we built on cross products are either strong assumptions or loose definitions. \\ \\
+    Cross product of $n-1$ vectors in n-D can be formally derived using concepts of tensors and exterior products from linear algebra \\ \\
+    In fact, this area plays a key role in understanding tensor calculus, tensor flow methods and quantum computation. \\ \\
+    A rigorous approach is considered so as to eliminate any assumptions other than an assumption that our basic definitions are true ! \\ \\
+    Start with an introduction to linear algebra that forms foundation over which tensor products are built and over which exterior products are built and over which cross products are built\\ \\
+    Also, in between we take digressions where we see some beautiful properties that come as a consequence of linear algebra \\ \\
+    \section{Linear Algebra}
+    \subsection{Field}
+    \textbf{Definition : }A field is a non empty set $\mathbb{F}$ with 2 special elements 0 (additive identity) and 1 (multiplicative identity) satisfying : \\ \\
+    1. There is an addition operation $ + : \mathbb{F} \times \mathbb{F} \rightarrow \mathbb{F} $ which is\\
+    1.a. associative \\
+    1.b. commutative \\
+    1.c. $\forall x \in \mathbb{F} , x + 0 = x$ \\
+    1.d. $\forall x \in \mathbb{F} , \exists -x , \ni x + -x = 0$ \\
+    $\mathbb{F}$ is an abelian group with respect to addition operation \\ \\
+    2. There is a multiplication operation $. : \mathbb{F} \times \mathbb{F} \rightarrow \mathbb{F} $ which is\\
+    2.a. associative \\
+    2.b. commutative \\
+    2.c. $\forall x \in \mathbb{F} , x . 1 = x$ \\
+    2.d. $\forall x \in \mathbb{F} , x \neq 0 , \exists \dfrac{1}{x} , \ni x . \dfrac{1}{x} = 1$ \\
+    $\mathbb{F} - \{0\}$ is an abelian group with respect to multiplication operation \\ \\
+    3. Multiplication operation distributes over addition, $\forall x, y, z \in \mathbb{F}, x . (y + z) = x.y + x.z $ \\ \\
+    4. $0 \neq 1$ . This condition is not necessary for a field but defined to focus only on non - trivial fields \\ \\
+    Examples : $\mathbb{R}$, $\mathbb{C}$, $\mathbb{Q}$, $\mathbb{Z}_3$ etc.,
+
+    \subsection{Vector Space}
+    \textbf{Definition : } A vector space over a field $\mathbb{F}$ (mostly real fields for our purpose) is a non empty set V with a special element 0 $\in V$ (additive identity) satisfying :  \\ \\
+    1. There is an addition operation $ + : V \times V \rightarrow V $ which is\\
+    1.a. associative \\
+    1.b. commutative \\
+    1.c. $\forall x \in V , x + 0 = x$ \\
+    1.d. $\forall x \in V , \exists -x , \ni x + -x = 0$ \\
+    V is an abelian group with respect to addition operation \\ \\
+    2. There is a multiplication operation $ . : \mathbb{F} \times V \rightarrow V $ which is\\
+    $\forall x, y \in V$ and $\forall c_1, c_2 in \mathbb{F} $ \\
+    2.a. $c_1 (x + y) = c_1x + c_1y$ \\
+    2.b. $(c_1 + c_2)x = c_1x + c_2x$ \\ 
+    2.c. $c_1(c_2 x) = (c_1c_2)x $ \\
+    2.d. $1.x = x$ where 1 is multiplicative identity in $\mathbb{F}$ \\ \\
+    Examples : $\mathbb{R}^n, \mathbb{C}^n, \mathbb{R}^\mathbb{R} = $ set of all real valued functions in $\mathbb{R}$, set of all m $\times$ n matrices \\ \\ 
+    Intuitively, Fields and vector spaces are sets with a certain structure defined on set that lead us to explore properties of these sets. Also, these sets can be seen as master classes from which various sub classes can be inherited. A theorem proved for a master class is true even for any sub class
+    \subsection{Sub space}
+    Let V be a vector space, a subset S of V is called a subspace of V if S is a vector space itself. \\
+    Examples : $S=\{(x,y) : x\in \mathbb{R} , y=x \}$ is a subspace in $\mathbb{R}^2$, \\
+    $S=\{ \begin{bmatrix} a & b \\ c & d \end{bmatrix}\ : b = 0, c = 0\}$ is a subspace in set of all 2 $\times$ 2 matrices 
+    \subsection{Span of a set of vectors in V}
+    \textbf{Definition :} Let $S = \{v_1, v_2, ... , v_k\}$ be a subset of vectors in V. Then linear span(S) $ = \{ v \ni v = \sum_{i=1}^k \alpha_i v_i, $, where$\alpha_i \in \mathbb{F} \}$ \\ \\
+    \textbf{Theorem : }Span of any finite subset of vectors in V is a subspace \\ \\
+    \textbf{Proof :} \\ \\
+    Let S be a subset of vectors in V \\ \\
+    1. Since V is a vector space, enough to check for closure properties in S, which trivially hold. \\ \\
+    \textbf{Claim : } $0(\in field). x = 0(\in V)$ \\
+    \textbf{Proof : } \\
+    $(0 + 0).v = 0.v$ \\
+    $\implies 0.v + 0.v = 0.v$ \\
+    $\implies (0.v + 0.v) + -0.v = 0.v + -0.v$ \\
+    $\implies 0.v + (0.v + -0.v) = 0.v + -0.v$ \\
+    $\implies 0.v + 0 = 0$ \\
+    $\implies 0.v = 0 \hspace{2cm} \blacksquare $ \\ \\
+    2. If $\alpha_i = 0 $ $\forall i = 1$ to k, then v = 0, so the special element 0 is in V \\ \\
+    $\implies$ S is a subspace of V $ \hspace{2cm} \blacksquare $ \\ \\
+    In vector space examples, consider set $S =\{(1,0,...,0),...,(0,0,..,1)\}$, $S1=\{ \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}\,\begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}\,\begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix}\,\begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}\ \}$ \\ \\
+    We see that span(S)=$\mathbb{R}^n$ and span(S1) = set of all 2 $\times$ 2 matrices \\ \\
+    Intuitively , for some vector spaces we could generate the entire vector space set by a finite subset of vectors which is called a basis for vector space. There are some interesting properties for this basis \\ \\
+    \subsection{Linear (In)dependence, Dimension, Basis}
+    \subsubsection{Linear (In)dependence}
+    \textbf{Definition (Linear Dependence): } A sub set of vectors $\{S=\{v_1,v_2,...,v_k\}$ in V is a linearly dependent set if $v_i \in$ Span(S) for some i \\ \\
+    \textbf{Definition (Linear Independence): } A sub set of vectors in V is linearly independent if it is linearly dependent i.e., there exist no i, $ 1 \leq i \leq k \ni $  
+    $v_i \in$ Span(S) \\ \\
+    In $\mathbb{R}^3$, Consider $S=\{x\}$ where x is a non-zero vector \\ \\
+    $S = S \cup \{y\}$ is linearly dependent stop, if y and x are co linear otherwise they are linearly independent continue \\ \\
+    $S = S \cup \{z\}$ is linearly dependent stop, if z is co planar with the plane spanned by $\{x\}$ and $\{y\}$ \\ \\
+    $S = S \cup \{w\}$ is linearly dependent for sure since S pans $\mathbb{R}^3$ \\ \\
+    A similar approach can be followed in $\mathbb{R}^n$ expect that the word plane and co linear doesn't make sense if $n \geq 4$ \\ \\
+    A set of 3 vectors $\{ \Vec{p_0},\Vec{p_1},\Vec{p_2}\}$ in $\mathbb{R}^3$ is linearly dependent $\implies \Vec{p_i} \in$ Span $(\Vec{p_{(i+1)\%3}},\Vec{p_{(i+2)\%3}})$ . Say $i = 0$ then, $\Vec{p_0}$ is co planar with the plane spanned by vectors $\Vec{p_1}$ and $\Vec{p_2}$ \\ \\
+    $\implies$ Volume of the solid spanned by $\{ \Vec{p_0},\Vec{p_1},\Vec{p_2}\}$ using the formulation in 2.1 = 0 \\ \\
+    Similarly, in n-D, A set of n vectors $\{ \Vec{p_0},\Vec{p_1},...,\Vec{p_{n-1}}\}$ in $\mathbb{R}^n$ is linearly dependent $\implies \Vec{p_i} \in$ Span $(\Vec{p_{(i+1)\%n}},\Vec{p_{(i+2)\%n}},...,\Vec{p_{(i+n-1)\%n}})$ . Say $i = 0$ then, $\Vec{p_0}$ is co planar with the "hyper" plane spanned by vectors $\{ \Vec{p_1},\Vec{p_2},...,\Vec{p_{n-1}}\}$ \\ \\
+    $\implies$ Volume of the solid spanned by $\{ \Vec{p_0},\Vec{p_1},...,\Vec{p_{n-1}}\}$ using the formulation in 2.1 = 0 \\ \\
+    \textbf{Remark : } A subset of any linearly independent set is also linearly independent 
+    \subsubsection{Dimension of a vector space}
+    \textbf{Definition : } A vector space is n - dimensional if there exist a subset of n linearly independent vectors in V and any other subset S in V with $|S| > n$ is linearly dependent. Also, n $\in \mathbb{N}$ \\
+    \subsubsection{Basis of a vector space}
+    \textbf{Definition : } A subset of vectors S = $\{\Vec{p_1},\Vec{p_2},..,\Vec{p_n}\}$ in V is called basis of V if S is linearly independent and span(S)=V \\ \\
+    \textbf{Theorem : } If S is a basis of vector space V, then $|S| = $ dimension of V = dim V \\ \\
+    \textbf{Proof : }
+    
+    \textbf{Theorem : } If S is a basis of vector space V, then $|S| = $ dimension of V = dim V \\ \\
+    \textbf{Proof : } Proof by contradiction, \\ \\
+    let $|S| = m$ and $dim V = n$ \\ \\
+    if not, then $m \neq n$ \\ \\
+    Case-1 : m $<$ n \\ \\
+    Since S is a basis, S is a linearly independent set and dim V $ \geq |S| $ which is a contradiction \\ \\
+    Case-2 : m $>$ n \\ \\
+    Since dim V = m then there exist a set A where $|A| = m$ and A is linearly independent. 
+    let $S=\{s_1,s_2,..,s_n\}$ and $A=\{a_1,a_2,..,a_m\}$ \\ \\
+    Then $a_j = \sum_{i=1}^n \alpha_i s_i$ where $1 \leq j \leq m$ \\ \\
+    Set $A^{'}=\{a_1,a_2,...,a_n\}$ is also a basis, since $A^{'}$ is linearly independent and can span V if not we have to add at least one more vector to $A^{'}$ and keep the resultant set linearly independent in since all bases have equally many vectors if not we had \\ \\
+    $\implies$ Span($A^{'}$)=Span(S)=V \\ \\
+    $\implies A_{n+1} \in $ Span($A^{'}$) which is a contradiction    $\blacksquare$
+\end{document}
+

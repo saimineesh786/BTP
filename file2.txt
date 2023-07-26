@@ -1,1 +1,2 @@
 Learning Git file 2
+ This is to test versioning of this file 2

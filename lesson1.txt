@@ -1,2 +1,6 @@
-kvnkjsfbvhjbsfjhvbhjfb jLesson 1 added, modified
+<<<<<<< HEAD
+m jfvj fjd j Lesson 1 added, modified
+=======
+m jfvj fjd j Lesson 1 added, modified
+>>>>>>> feature1
 
